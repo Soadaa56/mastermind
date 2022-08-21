@@ -38,7 +38,7 @@ class Mastermind
 
   def setup_code()
     if @player == :code_master
-      until valid_code?(@code) do
+      until valid_code? do
         # sleep(2)
         puts 'Your secret code will be a length  of four inputs, with the option'
         puts 'of 6 diffrent colors. Input the intial(s) of the color.'
@@ -47,13 +47,13 @@ class Mastermind
         puts "\n"
         # sleep(2.5)
         puts "Input the first code color:"
-        @code[0] = gets.chomp.downcase
+        @@code[0] = gets.chomp.downcase
         puts "Input the second code color:"
-        @code[1] = gets.chomp.downcase
+        @@code[1] = gets.chomp.downcase
         puts "Input the third code color:"
-        @code[2] = gets.chomp.downcase
+        @@code[2] = gets.chomp.downcase
         puts "Input the fourth code color:"
-        @code[3] = gets.chomp.downcase
+        @@code[3] = gets.chomp.downcase
         # valid_code?(@code)
         puts @code
       end
@@ -70,13 +70,13 @@ class Mastermind
     end
   end
 
-  def valid_code?(code)
-    if !code.empty? && code.all? { |color| @valid_colors.include?(color) }
-      return true
+  def valid_code?
+    if !@@code.empty? && @@code.all? { |color| @@valid_colors.include?(color) }
       puts "success"
+      return true
     else
-      return false
       puts "false"
+      return false
     end
   end
 
