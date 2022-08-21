@@ -2,6 +2,14 @@
 require 'pry-byebug'
 
 class Mastermind
+
+  @@valid_colors = ['r','b','g','pu','o','pi']
+  @@code = Array.new
+  @@code_length = 4
+
+  @player = ''
+  @computer = ''
+
   def initialize
     player_computer_roles
     setup_code
@@ -9,8 +17,6 @@ class Mastermind
 
 
   def player_computer_roles
-    @player = ''
-    @computer = ''
     puts 'Do you want to be the Code Master(1) or the Guesser(2)?'
     answer = gets.chomp.to_i
     if answer != 1 && answer != 2
@@ -31,7 +37,6 @@ class Mastermind
   end
 
   def setup_code()
-    @code = Array.new
     if @player == :code_master
       until valid_code?(@code) do
         # sleep(2)
@@ -55,9 +60,9 @@ class Mastermind
     else
       puts 'Setting up code...'
       # sleep(0.5)
-      puts 'Please wait while our top CPU\'s pick only the hardest to decipher code.'
+      puts 'Please wait while our top CPU\'s pick from only the hardest to decipher codes.'
       # sleep(0.8)
-      puts 'This may take anywhere from a few seconds to a few hours depending on your altitude.'
+      puts 'This may take up to a few hours, depending on your altitude.'
       # sleep(3)
       puts "..."
       # sleep(1)
@@ -66,7 +71,6 @@ class Mastermind
   end
 
   def valid_code?(code)
-    @valid_colors = ['r','b','g','pu','o','pi']
     if !code.empty? && code.all? { |color| @valid_colors.include?(color) }
       return true
       puts "success"
@@ -75,6 +79,13 @@ class Mastermind
       puts "false"
     end
   end
+
+  def computer_choose_code
+    @@code_length.times do
+      @@code.push(@@valid_colors.sample)
+    end
+  end
+
 end
 
 class Player
