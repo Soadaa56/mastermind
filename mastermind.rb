@@ -6,13 +6,13 @@ class Mastermind
   @@valid_colors = ['r','b','g','pu','o','pi']
   @@code = Array.new
   @@code_length = 4
-
   @player = ''
   @computer = ''
 
   def initialize
     player_computer_roles
     setup_code
+    guess_code
   end
 
 
@@ -74,8 +74,13 @@ class Mastermind
     if !@@code.empty? && @@code.all? { |color| @@valid_colors.include?(color) }
       puts "success"
       return true
+    elsif !@@code.empty?
+      sleep(0.5)
+      puts "Invalid code, please try again"
+      puts "\n"
+      sleep(1)
+      return false
     else
-      puts "false"
       return false
     end
   end
@@ -84,6 +89,22 @@ class Mastermind
     @@code_length.times do
       @@code.push(@@valid_colors.sample)
     end
+  end
+
+  def guess_code
+    if @player == :guesser
+      player_to_guess_code
+    else
+      computer_to_guess_code
+    end
+  end
+
+  def player_to_guess_code
+    p "test"
+  end
+
+  def computer_to_guess_code
+    puts "test"
   end
 
 end
