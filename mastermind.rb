@@ -8,6 +8,8 @@ class Mastermind
   @@code_length = 4
   @player = ''
   @computer = ''
+  @current_guess_of_code = Array.new
+  @attempt_counter += 1
 
   def initialize
     player_computer_roles
@@ -64,7 +66,7 @@ class Mastermind
       # sleep(0.8)
       puts 'This may take up to a few hours, depending on your altitude.'
       # sleep(3)
-      puts "..."
+      puts '...'
       # sleep(1)
       computer_choose_code
     end
@@ -72,12 +74,11 @@ class Mastermind
 
   def valid_code?
     if !@@code.empty? && @@code.all? { |color| @@valid_colors.include?(color) }
-      puts "success"
+      puts 'Success'
       return true
     elsif !@@code.empty?
-      sleep(0.5)
-      puts "Invalid code, please try again"
-      puts "\n"
+      puts 'Invalid code, please try again'
+      puts '\n'
       sleep(1)
       return false
     else
@@ -93,18 +94,35 @@ class Mastermind
 
   def guess_code
     if @player == :guesser
+      puts '\n'
+      puts 'Guess what you think is the 4 digit code'
       player_to_guess_code
     else
-      computer_to_guess_code
+      puts '\n'
+      puts 'The computer will now crack your code.'
+      computer_code_cracker
     end
   end
 
   def player_to_guess_code
-    p "test"
+    attempt_number_counter
+  end
+
+  def attempt_number_counter
+    @number_counter += 1
+    puts "Attempt ##{@attempt_number}:"
   end
 
   def computer_to_guess_code
-    puts "test"
+    attempt_number_counter
+  end
+  
+  def computer_code_cracker
+
+  end
+
+  def computer_code_cracker_attempt
+    
   end
 
 end
