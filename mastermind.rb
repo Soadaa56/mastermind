@@ -141,7 +141,13 @@ class Mastermind
   end
 
   def check_guess
+   if @@guess == @@code
+    game_over_victory
+   elsif 
     
+   else
+    
+   end
   end
 
   def computer_to_guess_code
@@ -157,7 +163,12 @@ class Mastermind
   end
 
   def game_over_failure
-    
+    puts 'Too bad, you didn\'t crack the code and the world is doomed!'
+    puts "BTW, the code was #{@@code}."
+  end
+
+  def game_over_victory
+    puts "Congratulations, you figured out the code was #{@@guess}!"
   end
 
 end
