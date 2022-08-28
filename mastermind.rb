@@ -6,6 +6,7 @@ class Mastermind
   @@valid_colors = ['r','b','g','pu','o','pi']
   @@code = Array.new
   @@code_length = 4
+  @@guess = Array.new
   @player = ''
   @computer = ''
   @current_guess_of_code = Array.new
@@ -104,13 +105,21 @@ class Mastermind
     end
   end
 
-  def player_to_guess_code
-    attempt_number_counter
-  end
-
   def attempt_number_counter
     @number_counter += 1
-    puts "Attempt ##{@attempt_number}:"
+    if @number_counter == 13
+      game_over_failure
+    else
+      puts "Attempt ##{@attempt_number}:"
+    end
+  end
+
+  def player_to_guess_code
+    attempt_number_counter
+    puts 'Input the 4 colors you want to guess(r, b, g, pu, o, pi).'
+    @@code_length.times do
+      @@code.push(gets.chomp)
+    end
   end
 
   def computer_to_guess_code
