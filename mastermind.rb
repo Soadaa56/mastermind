@@ -114,12 +114,34 @@ class Mastermind
     end
   end
 
+  def valid_guess?
+    if !@@guess.empty? && @@guess.all? { |color| @@valid_colors.include?(color) }
+      puts 'Success'
+      return true
+    elsif !@@guess.empty?
+      puts 'Invalid code, please try again'
+      puts '\n'
+      sleep(1)
+      return false
+    else
+      return false
+    end
+  end
+
   def player_to_guess_code
     attempt_number_counter
-    puts 'Input the 4 colors you want to guess(r, b, g, pu, o, pi).'
-    @@code_length.times do
-      @@code.push(gets.chomp)
+    until valid_guess? do
+      puts 'Input the 4 colors you want to guess(r, b, g, pu, o, pi).'
+      @@code_length.times do
+        @@code.push(gets.chomp)
+      end
     end
+    check_guess
+    player_to_guess_code
+  end
+
+  def check_guess
+    
   end
 
   def computer_to_guess_code
@@ -131,6 +153,10 @@ class Mastermind
   end
 
   def computer_code_cracker_attempt
+    
+  end
+
+  def game_over_failure
     
   end
 
