@@ -7,10 +7,11 @@ class Mastermind
   @@code = Array.new
   @@code_length = 4
   @@guess = Array.new
+  @@attempt_counter = 0
+  @@game_over = false
   @player = ''
   @computer = ''
   @current_guess_of_code = Array.new
-  @attempt_counter += 1
 
   def initialize
     player_computer_roles
@@ -58,7 +59,7 @@ class Mastermind
         puts "Input the fourth code color:"
         @@code[3] = gets.chomp.downcase
         # valid_code?(@code)
-        puts @code
+        puts "#{@@code}"
       end
     else
       puts 'Setting up code...'
@@ -69,13 +70,13 @@ class Mastermind
       # sleep(3)
       puts '...'
       # sleep(1)
-      computer_choose_code
+      computer_setup_code_to_guess
     end
   end
 
   def valid_code?
     if !@@code.empty? && @@code.all? { |color| @@valid_colors.include?(color) }
-      puts 'Success'
+      puts 'Successfully made your secret code.'
       return true
     elsif !@@code.empty?
       puts 'Invalid code, please try again'
@@ -87,7 +88,7 @@ class Mastermind
     end
   end
 
-  def computer_choose_code
+  def computer_setup_code_to_guess
     @@code_length.times do
       @@code.push(@@valid_colors.sample)
     end
@@ -95,32 +96,49 @@ class Mastermind
 
   def guess_code
     if @player == :guesser
-      puts '\n'
-      puts 'Guess what you think is the 4 digit code'
+      puts "\n"
       player_to_guess_code
     else
-      puts '\n'
+      puts "\n"
       puts 'The computer will now crack your code.'
       computer_code_cracker
     end
   end
 
+  def player_to_guess_code
+    puts 'You will have 6 colors to choose from (red, blue, green, purple, orange and pink).'
+    attempt_number_counter
+    if @@game_over == false
+      until valid_guess? do
+        puts 'Input the 4 colors you want to guess(r, b, g, pu, o, pi).'
+        puts 'Input 1:'
+        @@guess[0] = gets.chomp.downcase
+        puts 'Input 2:'
+        @@guess[1] = gets.chomp.downcase
+        puts 'Input 3:'
+        @@guess[2] = gets.chomp.downcase
+        puts 'Input 4:'
+        @@guess[3] = gets.chomp.downcase
+        end
+    end
+    binding.pry
+    check_guess
+  end
+
   def attempt_number_counter
-    @number_counter += 1
-    if @number_counter == 13
+    @@attempt_counter += 1
+    if @@attempt_counter == 13
+      @@game_over = true
       game_over_failure
-    else
-      puts "Attempt ##{@attempt_number}:"
     end
   end
 
   def valid_guess?
     if !@@guess.empty? && @@guess.all? { |color| @@valid_colors.include?(color) }
-      puts 'Success'
       return true
     elsif !@@guess.empty?
       puts 'Invalid code, please try again'
-      puts '\n'
+      puts "\n"
       sleep(1)
       return false
     else
@@ -128,25 +146,13 @@ class Mastermind
     end
   end
 
-  def player_to_guess_code
-    attempt_number_counter
-    until valid_guess? do
-      puts 'Input the 4 colors you want to guess(r, b, g, pu, o, pi).'
-      @@code_length.times do
-        @@code.push(gets.chomp)
-      end
-    end
-    check_guess
-    player_to_guess_code
-  end
-
   def check_guess
    if @@guess == @@code
     game_over_victory
-   elsif 
-    
    else
-    
+    puts "Guess number ##{@@attempt_counter}: #{@@guess}, was wrong. Try again"
+    @@guess == Array.new
+    player_to_guess_code
    end
   end
 
@@ -171,12 +177,6 @@ class Mastermind
     puts "Congratulations, you figured out the code was #{@@guess}!"
   end
 
-end
-
-class Player
-end
-
-class Computer
 end
 
 game = Mastermind.new
